@@ -1,145 +1,106 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PC : MonoBehaviour {
 	
 	private Animator m_Animator;
 
-	private bool isJumping;
+	private bool isJumping; //TODO work out what's going on and why the animator code is all disjointed
 	private bool isDucking;
-	
 	private float jumpHeight = 0.3f;
 	private float stdHeight = -0.6f;
+	private int levelSpeed = 0;
+    private int lives = 3;
 
-	private int levelSpeed;
-	private string levelName;
+    private void Awake()
+    {
+        levelSpeed = GameMGMT.gameManager.GetLevelSpeed(SceneManager.GetActiveScene().buildIndex);
+        print("speed: " + levelSpeed);
+    }
 
-	//private Transform m_GroundCheck;
-	//public LayerMask GroundLayer;
-
-	private int shellCount;
-	private int maxShells;
-	public Text countText;
-
-	
-	void Start () {
+    void Start ()
+    {
 		m_Animator = GetComponent<Animator>();
+	}
 
-		//m_GroundCheck = transform.FindChild("GroundCheck");
-
-		countText = GetComponent<Text>();
-		shellCount = 0;
-		maxShells = 13;
-		//SetCountText ();
-
-		levelName = Application.loadedLevelName;
-		int. TryParse(levelName, out levelSpeed);
+    void FixedUpdate () 
+    //void Update()
+    {
+		//float translation = Time.deltaTime * levelSpeed;
+		//transform.Translate(translation, 0, 0);
 
 	}
 
-	void Update () {
-
-		//Time.timeScale = 0.2F;
-		//float translation = Time.deltaTime * 3;
-		float translation = Time.deltaTime * levelSpeed;
-		transform.Translate(translation, 0, 0);
-
-	}
-
-	void OnTriggerEnter2D (Collider2D trigger) {
-		if (trigger.GetComponent<Collider2D>().tag == "Finish") {
-			//print ("Winner");
-			if (shellCount < maxShells){
-				Application.LoadLevel ("noshells");
-			} else if (Application.loadedLevelName != "5"){
-				Application.LoadLevel(Application.loadedLevel + 1);
-			} else {
-				Application.LoadLevel ("win");//load win screen;
+	void OnTriggerEnter2D (Collider2D trigger)
+    {
+		if (trigger.GetComponent<Collider2D>().tag == "Finish")
+        {
+            Scene curScene = SceneManager.GetActiveScene();
+			//if (shellCount < maxShells){
+			//	Application.LoadLevel ("noshells");
+			//} else if (Application.loadedLevelName != "5"){
+            /*if (curScene != GameMGMT.gameManager.finalScene)
+            { 
+                SceneManager.LoadScene(curScene.buildIndex + 1);
 			}
-		} else if (trigger.GetComponent<Collider2D>().tag == "obstacle") {
-			print ("TRIGGERED!!!!"); //move player backwards;
-			this.transform.position = new Vector3 (transform.position.x-1.0f, this.transform.position.y, this.transform.position.z);
-			
-			//SlowDown();
-			//Invoke("SpeedUp",2);
-		} else if (trigger.GetComponent<Collider2D>().tag == "tsunami") {
-			print ("Game Over");
-			Application.LoadLevel ("wipeout");//load lose screen;
-		} else if (trigger.GetComponent<Collider2D>().tag == "shell"){
-			shellCount = shellCount + 1;
-			print (shellCount);
-			//SetCountText ();
+            else
+            {
+                SceneManager.LoadScene(GameMGMT.gameManager.winScene.name);
+			}*/
+		}
+        else if (trigger.GetComponent<Collider2D>().tag == "obstacle")
+        {
+            //remove a life
+            if (lives == 0)
+            {
+                GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
+                print("wipeout scene: " + GameMGMT.gameManager.wipeoutSc);
+                //print("did cur level transfer?: " + GameMGMT.gameManager.CurSceneVarTest());
+                //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene.name);
+            }
+            else
+            {
+                lives -= lives;
+            }
 		}
 	} 
 
-	//CONTROLS:
-	//up - jump - avoid sharks
-	//nothing - neutral stance
-	//down - duck - avoid birds
+	void Update ()
+    //void FixedUpdate () 
+    {
+        float translation = Time.deltaTime * levelSpeed;
+        transform.Translate(translation, 0, 0);
 
-
-	void FixedUpdate () 
-	{
-
-		m_Animator.SetBool("isJumping", isJumping);
+        m_Animator.SetBool("isJumping", isJumping);
 		m_Animator.SetBool("isDucking", isDucking);
 
-
-//		//****EXPERIMENTAL JUMP STUFF BELOW:*****
-//		bool isGrounded = Physics2D.OverlapPoint (m_GroundCheck.position, GroundLayer);
-//		if(Input.GetButton("Jump")){
-//			print ("jump pressed");
-//			Animator animator = GetComponent<Animator>() as Animator;
-//
-//			if(isGrounded){
-//				print ("jump successful");
-//				animator.SetTrigger("isJumping");
-//				rigidbody2D.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
-//			}
-//		}
-
-
-		//****WORKING JUMP CODE BELOW******
-
-		if(Input.GetButton("Jump")){
+		/*if(Input.GetButton("Jump"))
+        {
 			Animator animator = GetComponent<Animator>() as Animator;
 			animator.SetTrigger("isJumping");
 
-			this.transform.position = new Vector3 (this.transform.position.x, jumpHeight, this.transform.position.z);
+			transform.position = new Vector3 (transform.position.x, jumpHeight, transform.position.z);
+		}*/
+
+		if(Input.GetButtonUp("Jump"))
+        {
+			transform.position = new Vector3 (transform.position.x, stdHeight, transform.position.z);
 		}
 
-		if(Input.GetButtonUp("Jump")){
-			this.transform.position = new Vector3 (this.transform.position.x, stdHeight, this.transform.position.z);
-		}
-
-		if(Input.GetButton("Duck")){
+		if(Input.GetButton("Duck"))
+        {
 			Animator animator = GetComponent<Animator>() as Animator;
 			animator.SetTrigger("isDucking");
 		}
+        else if (Input.GetButton("Jump"))
+        {
+            Animator animator = GetComponent<Animator>() as Animator;
+            animator.SetTrigger("isJumping");
 
-	}
-
-	//void SetCountText()
-	//{
-	//	countText.text = "x " + shellCount.ToString ();
-	//}
-	
-//	void SlowDown()
-//	{
-//		Time.timeScale = 0.3F;
-//		float translation = Time.deltaTime * 1;
-//		transform.Translate(translation, 0, 0);
-//
-//	}
-
-//	void SpeedUp()
-//	{
-//		Time.timeScale = 1.0F;
-//		float translation = Time.deltaTime * 2;
-//		transform.Translate(translation, 0, 0);
-//		
-//	}
+            transform.position = new Vector3(transform.position.x, jumpHeight, transform.position.z);
+        }
+    }
 
 }

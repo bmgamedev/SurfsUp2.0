@@ -14,21 +14,17 @@ public class ShellCount : MonoBehaviour {
 		SetCountText ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
 	void OnTriggerEnter2D (Collider2D trigger) {
 		if (trigger.GetComponent<Collider2D>().tag == "shell") {
 			shellCount = shellCount + 1;
-			print (shellCount);
+			//print (shellCount);
 			SetCountText ();
 		} 
 	}
 	
 	void SetCountText()	{
-		countText.text = "x " + shellCount.ToString ();
+
+        countText.text = "x " + shellCount.ToString () + "/13";
 	}
 	
 }
