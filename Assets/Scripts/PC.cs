@@ -17,7 +17,8 @@ public class PC : MonoBehaviour {
     private void Awake()
     {
         levelSpeed = GameMGMT.gameManager.GetLevelSpeed(SceneManager.GetActiveScene().buildIndex);
-        print("speed: " + levelSpeed);
+        //print("speed: " + levelSpeed); //for debugging
+        //print("lives: " + lives); //for debugging
     }
 
     void Start ()
@@ -25,50 +26,42 @@ public class PC : MonoBehaviour {
 		m_Animator = GetComponent<Animator>();
 	}
 
-    void FixedUpdate () 
-    //void Update()
-    {
-		//float translation = Time.deltaTime * levelSpeed;
-		//transform.Translate(translation, 0, 0);
-
-	}
-
 	void OnTriggerEnter2D (Collider2D trigger)
     {
 		if (trigger.GetComponent<Collider2D>().tag == "Finish")
         {
-            Scene curScene = SceneManager.GetActiveScene();
-			//if (shellCount < maxShells){
-			//	Application.LoadLevel ("noshells");
-			//} else if (Application.loadedLevelName != "5"){
-            /*if (curScene != GameMGMT.gameManager.finalScene)
+            string curScene = SceneManager.GetActiveScene().name;
+            int curSceneBI = SceneManager.GetSceneByName(curScene).buildIndex;
+
+            if (curScene != GameMGMT.gameManager.finalScene)
             { 
-                SceneManager.LoadScene(curScene.buildIndex + 1);
+                SceneManager.LoadScene(curSceneBI + 1);
 			}
             else
             {
-                SceneManager.LoadScene(GameMGMT.gameManager.winScene.name);
-			}*/
+                SceneManager.LoadScene(GameMGMT.gameManager.winScene);
+			}
 		}
         else if (trigger.GetComponent<Collider2D>().tag == "obstacle")
         {
+            print("hit obstacle"); //TODO why isn't this working with the birds??
+
             //remove a life
             if (lives == 0)
             {
                 GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
-                print("wipeout scene: " + GameMGMT.gameManager.wipeoutSc);
-                //print("did cur level transfer?: " + GameMGMT.gameManager.CurSceneVarTest());
-                //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene.name);
+                print("game over");
+                //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene);
             }
             else
             {
-                lives -= lives;
+                lives--;
+                print("current lives: " + lives);
             }
 		}
 	} 
 
 	void Update ()
-    //void FixedUpdate () 
     {
         float translation = Time.deltaTime * levelSpeed;
         transform.Translate(translation, 0, 0);
@@ -76,19 +69,12 @@ public class PC : MonoBehaviour {
         m_Animator.SetBool("isJumping", isJumping);
 		m_Animator.SetBool("isDucking", isDucking);
 
-		/*if(Input.GetButton("Jump"))
-        {
-			Animator animator = GetComponent<Animator>() as Animator;
-			animator.SetTrigger("isJumping");
-
-			transform.position = new Vector3 (transform.position.x, jumpHeight, transform.position.z);
-		}*/
-
 		if(Input.GetButtonUp("Jump"))
         {
 			transform.position = new Vector3 (transform.position.x, stdHeight, transform.position.z);
 		}
 
+        //TODO stop the ducking animation showing whilst jumping - has no impact on gameplay but it's annoying to look at 
 		if(Input.GetButton("Duck"))
         {
 			Animator animator = GetComponent<Animator>() as Animator;

@@ -7,7 +7,6 @@ public class ShellCount : MonoBehaviour {
 	private int shellCount;
 	public Text countText;
 	
-	// Use this for initialization
 	void Start () {
 
 		shellCount = 0;
@@ -17,7 +16,6 @@ public class ShellCount : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D trigger) {
 		if (trigger.GetComponent<Collider2D>().tag == "shell") {
 			shellCount = shellCount + 1;
-			//print (shellCount);
 			SetCountText ();
 		} 
 	}
