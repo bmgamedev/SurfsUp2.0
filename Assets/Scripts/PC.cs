@@ -11,14 +11,14 @@ public class PC : MonoBehaviour {
 	private bool isDucking;
 	private float jumpHeight = 0.3f;
 	private float stdHeight = -0.6f;
-	private int levelSpeed = 0;
+	private int levelSpeed;
     private int lives = 3;
 
     private void Awake()
     {
         levelSpeed = GameMGMT.gameManager.GetLevelSpeed(SceneManager.GetActiveScene().buildIndex);
-        //print("speed: " + levelSpeed); //for debugging
-        //print("lives: " + lives); //for debugging
+        print("speed: " + levelSpeed); //for debugging
+        print("lives: " + lives); //for debugging
     }
 
     void Start ()

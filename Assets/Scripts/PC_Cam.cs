@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PC_Cam : MonoBehaviour {
 	
-
 	public Transform target;
 	static PC_Cam instance = null;
 
@@ -16,9 +15,7 @@ public class PC_Cam : MonoBehaviour {
 	
 	void Update () 
 	{
-
-		transform.position  = new Vector3 (target.position.x+3.6f, transform.position.y, transform.position.z);
-
+		transform.position  = new Vector3 (target.position.x, transform.position.y, transform.position.z);
 	}
 
 }

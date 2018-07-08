@@ -15,8 +15,8 @@ public class GameMGMT : MonoBehaviour {
     bool hasShells;
     string curScene;
 
-    public string firstScene = "03";
-    public string finalScene = "05";
+    public string firstScene = "3";
+    public string finalScene = "5";
     public string wipeoutScene = "wipeout";
     public string winScene = "win";
 
@@ -36,6 +36,10 @@ public class GameMGMT : MonoBehaviour {
         
         curScene = "01"; //deliberately wrong for debugging... 
         //TODO: change curScene to firstScene when everything is working to ensure it can't crash the game if something goes wrong, it'll just enforce a full game restart instead which is less jarring
+
+        //TODO the following are just to assist whilst building the game, should probably delete once game is finished:
+        isFullRestart = false;
+        hasShells = true;
     }
 
     public void LoadClassicGame(string difficulty)
@@ -89,7 +93,7 @@ public class GameMGMT : MonoBehaviour {
 
     public int GetLevelSpeed(int loadedScene)
     {
-        int speed;
+        /*int speed;
 
         int firstSceneBI = SceneManager.GetSceneByName(firstScene).buildIndex;
 
@@ -108,8 +112,11 @@ public class GameMGMT : MonoBehaviour {
         else
         {
             speed = 3;
-        }
+        }*/
+
+        int speed = 3 + (loadedScene - SceneManager.GetSceneByName(firstScene).buildIndex);
 
         return speed;
     }
+
 }
