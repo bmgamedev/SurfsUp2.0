@@ -4,31 +4,30 @@ using UnityEngine.SceneManagement;
 
 public class Shells : MonoBehaviour {
 
-    /*private void Awake()
-    {
-        if (!GameMGMT.gameManager.ReturnShellRequirements())
-        {
-            //print("shells not allowed");
-            //GameObject.Find("countText").SetActive(false);
-            //GameObject.Find("shellIcon").SetActive(false);
-            //this.gameObject.SetActive(false);
-        }
-    }*/
-
     void OnTriggerEnter2D (Collider2D trigger) {
 
-        string triggerTag = trigger.GetComponent<Collider2D>().tag;
+        string triggerTag = trigger.tag;
 
         if (triggerTag == "Player") {
 			Destroy (gameObject);
 		} 
-        else if (triggerTag == "GameOver")
+    }
+
+    private void Update()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector2 shellPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
+
+        Vector2 dir = shellPos - playerPos;
+        //print(dir.normalized);
+
+        if (dir.normalized.x < -0.8)
         {
             GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
-            //print("missed a shell - Game over");
+            print("missed a shell - Game over");
             //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene);
         }
     }
-
 
 }

@@ -45,7 +45,7 @@ public class PC : MonoBehaviour {
 		}
         else if (trigger.GetComponent<Collider2D>().tag == "obstacle")
         {
-            print("hit obstacle"); //TODO why isn't this working with the birds??
+            print("hit obstacle");
 
             //remove a life
             if (lives == 0)
