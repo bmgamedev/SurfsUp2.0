@@ -25,7 +25,7 @@ public class Shells : MonoBehaviour {
         else if (triggerTag == "GameOver")
         {
             GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
-            print("missed a shell - Game over");
+            //print("missed a shell - Game over");
             //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene);
         }
     }

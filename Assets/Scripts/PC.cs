@@ -17,9 +17,9 @@ public class PC : MonoBehaviour {
     private void Awake()
     {
         levelSpeed = GameMGMT.gameManager.GetLevelSpeed(SceneManager.GetActiveScene().buildIndex);
-        print("speed: " + levelSpeed); //for debugging
-        print("lives: " + lives); //for debugging
-        print(GameMGMT.gameManager.ReturnPlayerPrefs());
+        //print("speed: " + levelSpeed); //for debugging
+        //print("lives: " + lives); //for debugging
+        print(GameMGMT.gameManager.ReturnPlayerPrefs()); //for debugging
     }
 
     void Start ()

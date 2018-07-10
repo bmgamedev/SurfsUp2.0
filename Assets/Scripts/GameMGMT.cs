@@ -7,9 +7,6 @@ public class GameMGMT : MonoBehaviour {
 
     public static GameMGMT gameManager;
 
-    //enum Mode { classic, infinite }; //TODO delete these if never used
-    //enum Difficulty {  relaxing, challenging, hardcore };
-
     //player session values
     bool isFullRestart;
     bool hasShells;
@@ -42,11 +39,12 @@ public class GameMGMT : MonoBehaviour {
         isFullRestart = false;
         hasShells = true;
 
+        //required for setting and updating speed of game as it goes along. SceneManager will call OnSceneLoaded() when the sceneLoaded event happens
         speed = 2;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void LoadClassicGame(string difficulty)
+    public void LoadClassicGame(string difficulty) //function called by the buttons on the difficulty select menu
     {
         if (difficulty == "relaxing")
         {
@@ -73,12 +71,12 @@ public class GameMGMT : MonoBehaviour {
         SceneManager.LoadScene(firstScene);
     }
 
-    public void CurrentScene(string scene)
+    public void CurrentScene(string scene) //called by PC and Shells script to store the level that was just failed so that the player can restart just that level if applicable
     {
         curScene = scene;
     }
 
-    public void Restart()
+    public void Restart() //determine whether the player gets to restart the level or the full game
     {
         if (isFullRestart)
         {
@@ -95,50 +93,23 @@ public class GameMGMT : MonoBehaviour {
         Application.Quit();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //used to increase the speed each time a new scene is loaded
     {
         //print("OnSceneLoaded: " + scene.name);
         speed++;
     }
 
-    public int GetLevelSpeed(int loadedScene)
+    public int GetLevelSpeed(int loadedScene) //called by PC script to set the player speed
     {
-        /*int speed;
-
-        int firstSceneBI = SceneManager.GetSceneByName(firstScene).buildIndex;
-
-        if(loadedScene == firstSceneBI)
-        {
-            speed = 3;
-        }
-        else if (loadedScene == firstSceneBI + 1)
-        {
-            speed = 4;
-        }
-        else if (loadedScene == firstSceneBI + 2)
-        {
-            speed = 5;
-        }
-        else
-        {
-            speed = 3;
-        }*/
-
-        //int firstLevel = int.Parse(firstScene); //TODO need a better system than using level names for speed. Also why does using Build Index result in -1 for the first level once you reach levels 4 and 5??
-
-        //int speed = 3 + (loadedScene - firstLevel);
-        //print("speed 3 + (" + loadedScene + " - " + firstLevel + ")");
-        //print("so total GM speed = " + speed);
-
         return speed;
     }
 
-    public bool ReturnShellRequirements()
+    public bool ReturnShellRequirements() //called by the DisableShells script to check if shells are required in this session
     {
         return hasShells;
     }
 
-    //TODO this is possibly only useful in debugging so maybe bin later
+    //TODO this is possibly only useful in debugging so maybe bin later - not used by any real game functionality
     public string ReturnPlayerPrefs()
     {
         return ("Shells? " + hasShells + ", Full restart? " + isFullRestart);

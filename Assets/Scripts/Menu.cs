@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour, ISelectHandler// required interface when usin
     //if allowing mouse pointer, use the following function instead of/along with OnSelect:
     /*public void OnPointerEnter(PointerEventData eventData){}*/
 
+    //TODO just get rid of all pointer functionality if possible - causes confusion if they move the mouse while on a menu
+
     public void OnSelect(BaseEventData eventData)
     {
         string button = this.name;
