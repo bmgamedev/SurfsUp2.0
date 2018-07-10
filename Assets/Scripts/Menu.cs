@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;// Required when using Event data.
 
 public class Menu : MonoBehaviour, ISelectHandler// required interface when using the OnSelect method. (include IPointerEnterHandler in this list if allowing mouse pointer)
 {
-
     public Text descriptionField;
 
 	public void StartGame(string name){

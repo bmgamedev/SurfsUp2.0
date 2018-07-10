@@ -14,6 +14,7 @@ public class GameMGMT : MonoBehaviour {
     bool isFullRestart;
     bool hasShells;
     string curScene;
+    int speed;
 
     public string firstScene = "3";
     public string finalScene = "5";
@@ -40,6 +41,9 @@ public class GameMGMT : MonoBehaviour {
         //TODO the following are just to assist whilst building the game, should probably delete once game is finished:
         isFullRestart = false;
         hasShells = true;
+
+        speed = 2;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     public void LoadClassicGame(string difficulty)
@@ -91,6 +95,12 @@ public class GameMGMT : MonoBehaviour {
         Application.Quit();
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //print("OnSceneLoaded: " + scene.name);
+        speed++;
+    }
+
     public int GetLevelSpeed(int loadedScene)
     {
         /*int speed;
@@ -114,9 +124,24 @@ public class GameMGMT : MonoBehaviour {
             speed = 3;
         }*/
 
-        int speed = 3 + (loadedScene - SceneManager.GetSceneByName(firstScene).buildIndex);
+        //int firstLevel = int.Parse(firstScene); //TODO need a better system than using level names for speed. Also why does using Build Index result in -1 for the first level once you reach levels 4 and 5??
+
+        //int speed = 3 + (loadedScene - firstLevel);
+        //print("speed 3 + (" + loadedScene + " - " + firstLevel + ")");
+        //print("so total GM speed = " + speed);
 
         return speed;
+    }
+
+    public bool ReturnShellRequirements()
+    {
+        return hasShells;
+    }
+
+    //TODO this is possibly only useful in debugging so maybe bin later
+    public string ReturnPlayerPrefs()
+    {
+        return ("Shells? " + hasShells + ", Full restart? " + isFullRestart);
     }
 
 }
