@@ -24,6 +24,7 @@ public class Shells : MonoBehaviour {
 
         if (dir.normalized.x < -0.8)
         {
+            Destroy(gameObject);
             GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
             print("missed a shell - Game over");
             //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene);

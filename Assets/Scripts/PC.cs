@@ -34,13 +34,13 @@ public class PC : MonoBehaviour {
             string curScene = SceneManager.GetActiveScene().name;
             int curSceneBI = SceneManager.GetSceneByName(curScene).buildIndex;
 
-            if (curScene != GameMGMT.gameManager.finalScene)
+            if (curScene != GameMGMT.gameManager.GetFinalScene())
             { 
                 SceneManager.LoadScene(curSceneBI + 1);
 			}
             else
             {
-                SceneManager.LoadScene(GameMGMT.gameManager.winScene);
+                SceneManager.LoadScene(GameMGMT.gameManager.GetWinScene());
 			}
 		}
         else if (trigger.GetComponent<Collider2D>().tag == "obstacle")

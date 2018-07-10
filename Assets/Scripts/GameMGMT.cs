@@ -16,10 +16,13 @@ public class GameMGMT : MonoBehaviour {
     string curScene;
     int speed;
 
-    public string firstScene = "3";
-    public string finalScene = "5";
-    public string wipeoutScene = "wipeout";
-    public string winScene = "win";
+    //Scene names here to make updating easier if any scenes/scene names change - using Get...() methods for anything that needs these scene names outside of this script (e.g. PC script)
+    private string startScene = "Start";
+    private string firstScene = "3";
+    private string finalScene = "5";
+    //private string wipeoutScene = "wipeout";
+    //private string noShellsScene = "noshells";
+    private string winScene = "win";
 
     void Awake()
     {
@@ -96,6 +99,11 @@ public class GameMGMT : MonoBehaviour {
         Application.Quit();
     }
 
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(startScene);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //used to increase the speed each time a new scene is loaded
     {
         //print("OnSceneLoaded: " + scene.name);
@@ -107,9 +115,19 @@ public class GameMGMT : MonoBehaviour {
         return speed;
     }
 
-    public bool ReturnShellRequirements() //called by the DisableShells script to check if shells are required in this session
+    public bool GetShellRequirements() //called by the DisableShells script to check if shells are required in this session
     {
         return hasShells;
+    }
+
+    public string GetFinalScene() //called by PC script
+    {
+        return finalScene;
+    }
+
+    public string GetWinScene() //called by PC script
+    {
+        return winScene;
     }
 
     //TODO this is possibly only useful in debugging so maybe bin later - not used by any real game functionality

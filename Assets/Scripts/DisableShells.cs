@@ -6,7 +6,7 @@ public class DisableShells : MonoBehaviour {
 
     private void Awake()
     {
-        if (!GameMGMT.gameManager.ReturnShellRequirements())
+        if (!GameMGMT.gameManager.GetShellRequirements())
         {
             print("shells not allowed");
             GameObject.Find("countText").SetActive(false);

@@ -6,6 +6,10 @@ using UnityEngine.EventSystems;// Required when using Event data.
 
 public class Menu : MonoBehaviour, ISelectHandler// required interface when using the OnSelect method. (include IPointerEnterHandler in this list if allowing mouse pointer)
 {
+
+    //TODO should this script get merged into GameMGMT?
+
+
     public Text descriptionField;
 
     //Get rid of mouse functionality - causes confusion if they move the mouse while on a menu
