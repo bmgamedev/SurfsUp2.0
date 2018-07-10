@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameMGMT : MonoBehaviour {
 
+    //TODO this has nothing to do with GameMGMT but so I don't forget:
+    //Redo the win screen image because the shadows are wrong and it's super annoying to look at
+
     public static GameMGMT gameManager;
 
     //player session values
