@@ -8,15 +8,18 @@ public class Menu : MonoBehaviour, ISelectHandler// required interface when usin
 {
     public Text descriptionField;
 
+    //Get rid of mouse functionality - causes confusion if they move the mouse while on a menu
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
 	public void StartGame(string name){
         SceneManager.LoadScene(name);
     }
 
-    //if allowing mouse pointer, use the following function instead of/along with OnSelect:
+    //for future reference: if allowing mouse pointer, use the following function instead of/along with OnSelect:
     /*public void OnPointerEnter(PointerEventData eventData){}*/
-
-    //TODO just get rid of all pointer functionality if possible - causes confusion if they move the mouse while on a menu
-
     public void OnSelect(BaseEventData eventData)
     {
         string button = this.name;
