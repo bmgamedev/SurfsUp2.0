@@ -18,9 +18,9 @@ public class Menu : MonoBehaviour, ISelectHandler// required interface when usin
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-	public void StartGame(string name){
+	/*public void StartGame(string name){
         SceneManager.LoadScene(name);
-    }
+    }*/
 
     //for future reference: if allowing mouse pointer, use the following function instead of/along with OnSelect:
     /*public void OnPointerEnter(PointerEventData eventData){}*/

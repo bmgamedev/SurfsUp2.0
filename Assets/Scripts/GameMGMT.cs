@@ -23,6 +23,8 @@ public class GameMGMT : MonoBehaviour {
     //private string wipeoutScene = "wipeout";
     //private string noShellsScene = "noshells";
     private string winScene = "win";
+    private string difficultySelect = "DifficultySelect";
+    private string infiniteMode = "Infinite";
 
     void Awake()
     {
@@ -48,6 +50,17 @@ public class GameMGMT : MonoBehaviour {
         //required for setting and updating speed of game as it goes along. SceneManager will call OnSceneLoaded() when the sceneLoaded event happens
         speed = 2;
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void LoadDifficultySelect()
+    {
+        //load the difficulty select menu, not the actual game
+        SceneManager.LoadScene(difficultySelect);
+    }
+
+    public void StartInfiniteGame()
+    {
+        SceneManager.LoadScene(infiniteMode);
     }
 
     public void LoadClassicGame(string difficulty) //function called by the buttons on the difficulty select menu
