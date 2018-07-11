@@ -4,8 +4,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PC : MonoBehaviour {
-	
-	private Animator m_Animator;
+
+    private Text livesText;
+
+    private Animator m_Animator;
 
 	private bool isJumping; //TODO work out what's going on and why the animator code is all disjointed
 	private bool isDucking;
@@ -16,16 +18,20 @@ public class PC : MonoBehaviour {
 
     private void Awake()
     {
-        levelSpeed = GameMGMT.gameManager.GetLevelSpeed(SceneManager.GetActiveScene().buildIndex);
+        //levelSpeed = GameMGMT.gameManager.GetLevelSpeed(SceneManager.GetActiveScene().buildIndex);
+        levelSpeed = GameMGMT.gameManager.GetLevelSpeed();
         //print("speed: " + levelSpeed); //for debugging
         //print("lives: " + lives); //for debugging
         print(GameMGMT.gameManager.ReturnPlayerPrefs()); //for debugging
+
+        livesText = GameObject.Find("livesText").GetComponent<Text>();
     }
 
     void Start ()
     {
 		m_Animator = GetComponent<Animator>();
-	}
+        SetLivesText();
+    }
 
 	void OnTriggerEnter2D (Collider2D trigger)
     {
@@ -51,12 +57,14 @@ public class PC : MonoBehaviour {
             if (lives == 0)
             {
                 GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
+                GameMGMT.gameManager.SetLevelSpeed(levelSpeed - 1);
                 print("game over");
-                //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene);
+                SceneManager.LoadScene(GameMGMT.gameManager.GetWipeoutScene());
             }
             else
             {
                 lives--;
+                SetLivesText();
                 print("current lives: " + lives);
             }
 		}
@@ -88,6 +96,11 @@ public class PC : MonoBehaviour {
 
             transform.position = new Vector3(transform.position.x, jumpHeight, transform.position.z);
         }
+    }
+
+    void SetLivesText()
+    {
+        livesText.text = "Lives: " + lives.ToString();
     }
 
 }

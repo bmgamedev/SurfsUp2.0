@@ -20,8 +20,8 @@ public class GameMGMT : MonoBehaviour {
     private string startScene = "Start";
     private string firstScene = "3";
     private string finalScene = "5";
-    //private string wipeoutScene = "wipeout";
-    //private string noShellsScene = "noshells";
+    private string wipeoutScene = "wipeout";
+    private string noShellsScene = "noshells";
     private string winScene = "win";
     private string difficultySelect = "DifficultySelect";
     private string infiniteMode = "Infinite";
@@ -119,13 +119,19 @@ public class GameMGMT : MonoBehaviour {
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) //used to increase the speed each time a new scene is loaded
     {
-        //print("OnSceneLoaded: " + scene.name);
         speed++;
+        print("Scene " + scene.name + " speed: " + speed);
     }
 
-    public int GetLevelSpeed(int loadedScene) //called by PC script to set the player speed
+    //public int GetLevelSpeed(int loadedScene) //called by PC script to set the player speed
+    public int GetLevelSpeed()
     {
         return speed;
+    }
+
+    public void SetLevelSpeed(int curSpeed)
+    {
+        speed = curSpeed;
     }
 
     public bool GetShellRequirements() //called by the DisableShells script to check if shells are required in this session
@@ -141,6 +147,16 @@ public class GameMGMT : MonoBehaviour {
     public string GetWinScene() //called by PC script
     {
         return winScene;
+    }
+
+    public string GetWipeoutScene() //called by PC script
+    {
+        return wipeoutScene;
+    }
+
+    public string GetMissedShellScreen() //called by Shells script
+    {
+        return noShellsScene;
     }
 
     //TODO this is possibly only useful in debugging so maybe bin later - not used by any real game functionality

@@ -25,9 +25,10 @@ public class Shells : MonoBehaviour {
         if (dir.normalized.x < -0.8)
         {
             Destroy(gameObject);
+            GameMGMT.gameManager.SetLevelSpeed(GameMGMT.gameManager.GetLevelSpeed() - 1);
             GameMGMT.gameManager.CurrentScene(SceneManager.GetActiveScene().name);
             print("missed a shell - Game over");
-            //SceneManager.LoadScene(GameMGMT.gameManager.wipeoutScene);
+            SceneManager.LoadScene(GameMGMT.gameManager.GetMissedShellScreen());
         }
     }
 
